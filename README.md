@@ -2,7 +2,7 @@ Tumble Out is a Tumblr to Jekyll migration utility. It extracts public and priva
 
 ## Usage
 
-    $ tumble_out -f <tumblog url> [OPTIONAL]
+    $ tumble_out <tumblog url> [OPTIONAL]
 
 If you only give it your tumblog url, Tumble Out will extract all public posts and assets. If you give it your credentials, private posts will appear in "<your tumblog>/private".
 
@@ -15,3 +15,7 @@ will show you all the available options.
 ## Layout
 
 Tumble Out can export your layout to give you a starting point, but you should take notice of copyright details and respect theme authors like the good internet citizen you are. If you wish to skip this step, use the *-L* flag in the command line.
+
+## Source formats
+
+Supported post formats are only HTML and Markdown. If you need Textile, feel free to fork it and send a pull request.
