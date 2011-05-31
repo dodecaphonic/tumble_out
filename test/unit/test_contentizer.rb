@@ -1,7 +1,5 @@
-require 'minitest/autorun'
-require 'mocha'
-
-require File.join(File.dirname(__FILE__), "..", "..", "lib", "tumble_out")
+require File.join(File.dirname(__FILE__), "..",
+                  "test_helper")
 
 class TestContentizer < MiniTest::Unit::TestCase
   def setup
@@ -9,7 +7,7 @@ class TestContentizer < MiniTest::Unit::TestCase
                     File.join(File.dirname(__FILE__), "..",
                               "assets", "sample.xml")
                     )
-    
+
     Net::HTTP.expects(:get).
       with(URI.parse("http://sample.tumblr.com/api/read")).returns raw_data
     @contentizer = TumbleOut::Contentizer.new("sample.tumblr.com")
@@ -17,7 +15,7 @@ class TestContentizer < MiniTest::Unit::TestCase
 
   def test_if_number_of_posts_is_correct
     posts = @contentizer.posts
-    
+
     assert_equal 7, posts.size
   end
 
@@ -25,7 +23,7 @@ class TestContentizer < MiniTest::Unit::TestCase
     types = @contentizer.posts.map { |p| p.type }
 
     assert_equal 7, types.size
-    
+
   end
 
   def test_whether_posts_are_of_specific_types
@@ -34,7 +32,7 @@ class TestContentizer < MiniTest::Unit::TestCase
     post_types = @contentizer.posts.map { |p|
       p.type
     }.uniq.sort
-    
+
     assert_equal valid_types, post_types
   end
 
