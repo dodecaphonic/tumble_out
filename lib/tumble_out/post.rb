@@ -15,6 +15,7 @@ module TumbleOut
       @body  = nil
       @slug  = nil
       @topics = nil
+      @coder = HTMLEntities.new
 
       parse raw_post
     end
@@ -64,15 +65,19 @@ module TumbleOut
 
     def parse_audio(post)
       title = post.search("id3-title").text
-      body = post.search("audio-player").inner_html +
-        post.search("audio-caption").inner_html
+      body = @coder.decode(post.search("audio-player").
+                           inner_html +
+                           post.search("audio-caption").
+                           inner_html)
 
       [title, body]
     end
 
     def parse_video(post)
-      body = post.search("video-source").inner_html +
-        post.search("video-caption").inner_html
+      body = @coder.decode(post.search("video-source").
+                           inner_html +
+                           post.search("video-caption").
+                           inner_html)
 
       [nil, body]
     end
@@ -92,7 +97,8 @@ module TumbleOut
 
     def parse_answer(post)
       question = post.search("question").text
-      answer = post.search("answer").inner_html
+      answer = @coder.decode(post.search("answer").
+                             inner_html)
 
       body  = "<div class=\"question\">#{question}</div>\n"
       body += "<div class=\"answer\">#{answer}</div>"
@@ -102,7 +108,9 @@ module TumbleOut
 
     def parse_photo(post)
       src  = post.search("photo-url").first.text
-      caption = post.search("photo-caption").inner_html
+      caption = @coder.decode(post.
+                              search("photo-caption").
+                              inner_html)
       body = "<img src=\"#{src}\"><br/>#{caption}"
 
       [nil, body]
@@ -119,11 +127,10 @@ module TumbleOut
     end
 
     def create_file_name
-      if @slug.nil?
-        raise StandardError, "Missing slug"
-      else
-        "#{@date.year}-#{@date.month}-#{@date.day}-#{@slug}.#{@format}"
-      end
+      name = (@slug.nil? ||
+              @slug.empty?) ? @date.to_i : @slug
+
+      "#{@date.year}-#{@date.month}-#{@date.day}-#{name}.#{@format}"
     end
   end
 end
