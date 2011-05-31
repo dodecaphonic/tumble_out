@@ -1,7 +1,8 @@
 module TumbleOut
   class Post
-    attr_reader :type, :date, :format
-    attr_accessor :title, :body, :slug
+    attr_reader :type, :date, :format, :title, :body,
+                :slug, :permalink, :use_permalink,
+                :topics
 
     def initialize(raw_post, use_permalink=false)
       @raw_post = raw_post

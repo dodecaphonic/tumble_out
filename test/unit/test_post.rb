@@ -28,4 +28,10 @@ class TestPost < MiniTest::Unit::TestCase
     assert_equal 1, ul.size
     assert_equal 4, ul.search("li").size
   end
+
+  def test_if_tags_match_sample_data
+    tagged = @posts.find { |p| !p.topics.empty? }
+
+    assert_equal %w(Berlin startup), tagged.topics
+  end
 end
