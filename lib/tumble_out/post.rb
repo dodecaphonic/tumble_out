@@ -13,12 +13,19 @@ module TumbleOut
       @title = nil
       @body  = nil
       @slug  = nil
+      @topics = nil
+
       parse raw_post
     end
 
     def dump(directory)
       full_path = File.join(directory, create_file_name)
-      open(full_path, "w") { |f| f << @body }
+
+      open(full_path, "w") do |f|
+        f << create_front_matter
+        f << "\n"
+        f << @body
+      end
     end
 
     private
@@ -28,6 +35,7 @@ module TumbleOut
       @slug = raw_post["slug"],
       @format = raw_post["format"]
       @permalink = raw_post["url-with-slug"].scan(/(\/post\/\d+\/\S+)$/)
+      @topics = raw_post.search("tag").map { |t| t.text }
 
       @title, @body = case @type
                       when "audio"
@@ -97,6 +105,16 @@ module TumbleOut
       body = "<img src=\"#{src}\"><br/>#{caption}"
 
       [nil, body]
+    end
+
+    def create_front_matter
+      fm = "---\nlayout:post"
+      fm << "\ntitle: #{@title}" if @title
+      fm << "\npermalink: #{@permalink}" if @permalink
+      fm << "\ntopics: " << @topics.join(" ") unless @topics.empty?
+      fm << "\n---"
+
+      fm
     end
 
     def create_file_name
