@@ -9,7 +9,6 @@ def show_help
   puts
   puts "\t-h, --help".ljust(20, " ") << "This help message"
   puts "\t-l, --permalinks".ljust(20, " ") << "Use original permalinks to keep Google juice flowing"
-  puts "\t-b, --no-layout".ljust(20, " ") << "Export posts only"
   puts "\t-u, --username".ljust(20, " ") << "Username (requires -p), used if you wish to export private posts"
   puts "\t-p, --password".ljust(20, " ") << "Password (requires -u), used if you wish to export private posts"
   puts "\t-d, --output-dir".ljust(20, " ") << "Output directory (default: current directory)"
@@ -18,15 +17,14 @@ def show_help
 end
 
 opts = GetoptLong.new(
-                      ['--help', '--h', GetoptLong::NO_ARGUMENT],
+                      ['--help', '-h', GetoptLong::NO_ARGUMENT],
                       ['--permalinks', '-l', GetoptLong::NO_ARGUMENT],
-                      ['--no-layout', '-b', GetoptLong::NO_ARGUMENT],
                       ['--username', '-u', GetoptLong::REQUIRED_ARGUMENT],
                       ['--password', '-p', GetoptLong::REQUIRED_ARGUMENT],
                       ['--output-dir', '-d', GetoptLong::REQUIRED_ARGUMENT]
                       )
 
-permalinks = no_layout = false
+permalinks = false
 username = password = output_dir = nil
 
 opts.each do |opt, arg|
@@ -35,8 +33,6 @@ opts.each do |opt, arg|
     show_help
   when '--permalinks'
     permalinks = true
-  when '--no-layout'
-    no_layout = true
   when '--username'
     username = arg
   when '--password'
