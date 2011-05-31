@@ -4,16 +4,17 @@ module TumbleOut
 
     def initialize(url)
       @url = url
-      @total_posts = 0
+      @total_posts = nil
       @chunk_size  = 50
       @posts = []
       @done  = false
     end
 
     def posts
-      unless @done
+      until @done
         chunk = raw_posts(@posts.size)
         @posts += chunk.map { |rp| Post.new rp }
+        @done = @posts.size == @total_posts
       end
 
       @posts
@@ -24,7 +25,7 @@ module TumbleOut
     end
 
     def dump(directory)
-      directory = File.join(directory, @url, "posts")
+      directory = File.join(directory, @url, "_posts")
 
       if !File.exist?(directory)
         FileUtils.mkdir_p directory
@@ -34,9 +35,14 @@ module TumbleOut
     end
 
     private
-
     def raw_posts(offset=0)
-      doc = Nokogiri::XML(Net::HTTP.get(URI.parse("http://#{@url}/api/read")))
+      uri = "http://#{@url}/api/read?start=#{offset}"
+      doc = Nokogiri::XML(Net::HTTP.get(URI.parse(uri)))
+
+      if @total_posts.nil?
+        @total_posts = doc.search("posts").first.
+          attr("total").to_i
+      end
 
       doc.search "post"
     end

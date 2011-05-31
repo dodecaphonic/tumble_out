@@ -9,7 +9,7 @@ class TestPost < MiniTest::Unit::TestCase
                     )
 
     Net::HTTP.expects(:get).
-      with(URI.parse("http://sample.tumblr.com/api/read")).returns raw_data
+      with(URI.parse("http://sample.tumblr.com/api/read?start=0")).returns raw_data
     contentizer = TumbleOut::Contentizer.new("sample.tumblr.com")
     @posts = contentizer.posts
   end

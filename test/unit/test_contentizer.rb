@@ -9,7 +9,7 @@ class TestContentizer < MiniTest::Unit::TestCase
                     )
 
     Net::HTTP.expects(:get).
-      with(URI.parse("http://sample.tumblr.com/api/read")).returns raw_data
+      with(URI.parse("http://sample.tumblr.com/api/read?start=0")).returns raw_data
     @contentizer = TumbleOut::Contentizer.new("sample.tumblr.com")
   end
 
@@ -39,7 +39,7 @@ class TestContentizer < MiniTest::Unit::TestCase
   # TODO: mock the crap out of this.
   def test_that_dump_creates_a_file_for_each_post
     full_path = File.join("/tmp", @contentizer.url,
-                          "posts", "*")
+                          "_posts", "*")
 
     @contentizer.dump "/tmp"
 
