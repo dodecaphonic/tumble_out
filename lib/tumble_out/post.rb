@@ -33,9 +33,9 @@ module TumbleOut
     def parse(raw_post)
       @type = raw_post["type"]
       @date = Time.at(raw_post["unix-timestamp"].to_i)
-      @slug = raw_post["slug"],
+      @slug = raw_post["slug"]
       @format = raw_post["format"]
-      @permalink = raw_post["url-with-slug"].scan(/(\/post\/\d+\/\S+)$/)
+      @permalink = raw_post["url-with-slug"].scan(/(\/post\/\d+\/\S+)$/).flatten.shift
       @topics = raw_post.search("tag").map { |t| t.text }
 
       @title, @body = case @type
@@ -101,7 +101,7 @@ module TumbleOut
     end
 
     def parse_photo(post)
-      src  = post.search("photo-url").text
+      src  = post.search("photo-url").first.text
       caption = post.search("photo-caption").inner_html
       body = "<img src=\"#{src}\"><br/>#{caption}"
 
@@ -109,7 +109,7 @@ module TumbleOut
     end
 
     def create_front_matter
-      fm = "---\nlayout:post"
+      fm = "---\nlayout: post"
       fm << "\ntitle: #{@title}" if @title
       fm << "\npermalink: #{@permalink}" if @permalink
       fm << "\ntopics: " << @topics.join(" ") unless @topics.empty?
