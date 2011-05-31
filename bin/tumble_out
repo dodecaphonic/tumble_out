@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(File.join(File.dirname(__FILE__), "..", "lib", "tumble_out"))
+require 'getoptlong'
+
+def show_help
+  puts "Usage: tumble_out [OPTS] tumblog_url"
+  puts "Exports a Tumblr blog to Jekyll, including its layout."
+  puts
+  puts "\t-h, --help".ljust(20, " ") << "This help message"
+  puts "\t-l, --permalinks".ljust(20, " ") << "Use original permalinks to keep Google juice flowing"
+  puts "\t-b, --no-layout".ljust(20, " ") << "Export posts only"
+  puts "\t-u, --username".ljust(20, " ") << "Username (requires -p), used if you wish to export private posts"
+  puts "\t-p, --password".ljust(20, " ") << "Password (requires -u), used if you wish to export private posts"
+  puts "\t-d, --output-dir".ljust(20, " ") << "Output directory (default: current directory)"
+
+  exit
+end
+
+opts = GetoptLong.new(
+                      ['--help', '--h', GetoptLong::NO_ARGUMENT],
+                      ['--permalinks', '-l', GetoptLong::NO_ARGUMENT],
+                      ['--no-layout', '-b', GetoptLong::NO_ARGUMENT],
+                      ['--username', '-u', GetoptLong::REQUIRED_ARGUMENT],
+                      ['--password', '-p', GetoptLong::REQUIRED_ARGUMENT],
+                      ['--output-dir', '-d', GetoptLong::REQUIRED_ARGUMENT]
+                      )
+
+permalinks = no_layout = false
+username = password = output_dir = nil
+
+opts.each do |opt, arg|
+  case opt
+  when '--help'
+    show_help
+  when '--permalinks'
+    permalinks = true
+  when '--no-layout'
+    no_layout = true
+  when '--username'
+    username = arg
+  when '--password'
+    password = argnnn
+  when '--output-dir'
+    output_dir = arg
+  end
+end
+
+if (username.nil? && password) ||
+    (username && password.nil?)
+  puts "You need to set both username and password to export private posts. See tumblog -h for more information."
+  exit
+end
+
+output_dir = Dir.pwd if output_dir.nil?
+
+tumblog = ARGV.shift
+
+if tumblog.nil?
+  puts "You need to provide a tumblog url. See tumblog -h for more information."
+  exit
+end
+
+contentizer = TumbleOut::Contentizer.new(tumblog)
+contentizer.dump output_dir
