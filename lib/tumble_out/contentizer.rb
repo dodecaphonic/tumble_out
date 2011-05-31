@@ -2,20 +2,27 @@ module TumbleOut
   class Contentizer
     attr_reader :url
 
-    def initialize(url)
+    def initialize(url, progress=false)
       @url = url
       @total_posts = nil
       @chunk_size  = 50
       @posts = []
       @done  = false
+      @show_progress = progress
     end
 
     def posts
+      $stderr.puts "Exporting..." if @show_progress
+
       until @done
         chunk = raw_posts(@posts.size)
         @posts += chunk.map { |rp| Post.new rp }
         @done = @posts.size == @total_posts
+
+        $stderr.print "\r#{@posts.size} of #{@total_posts}" if @show_progress
       end
+
+      puts if @show_progress
 
       @posts
     end
