@@ -36,12 +36,17 @@ class TestContentizer < MiniTest::Unit::TestCase
     assert_equal valid_types, post_types
   end
 
+  # TODO: mock the crap out of this.
   def test_that_dump_creates_a_file_for_each_post
     full_path = File.join("/tmp", @contentizer.url,
-                          "posts", "*.markdown")
+                          "posts", "*")
 
     @contentizer.dump "/tmp"
 
-    assert_equal 7, Dir.glob(full_path).size
+    files = Dir.glob(full_path)
+
+    assert_equal 7, files.size
+
+    files.each { |f| File.delete f }
   end
 end
