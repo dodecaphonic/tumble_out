@@ -4,6 +4,7 @@ require "net/http"
 require "nokogiri"
 require "markdown"
 require "fileutils"
+require "htmlentities"
 
 $LOAD_PATH.unshift File.dirname(__FILE__)
 
