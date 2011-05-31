@@ -16,11 +16,11 @@ class TestContentizer < MiniTest::Unit::TestCase
   def test_if_number_of_posts_is_correct
     posts = @contentizer.posts
 
-    assert_equal 7, posts.size
+    assert_equal 8, posts.size
   end
 
   def test_that_post_types_are_of_a_given_count
-    types = @contentizer.posts.map { |p| p.type }
+    types = @contentizer.posts.map { |p| p.type }.uniq
 
     assert_equal 7, types.size
 
@@ -45,7 +45,7 @@ class TestContentizer < MiniTest::Unit::TestCase
 
     files = Dir.glob(full_path)
 
-    assert_equal 7, files.size
+    assert_equal 8, files.size
 
     files.each { |f| File.delete f }
   end

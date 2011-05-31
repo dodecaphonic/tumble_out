@@ -34,4 +34,11 @@ class TestPost < MiniTest::Unit::TestCase
 
     assert_equal %w(Berlin startup), tagged.topics
   end
+
+  def test_if_photoset_has_been_parsed
+    photoset = @posts.last
+    doc = Nokogiri::HTML(photoset.body)
+
+    assert_equal 2, doc.search("img").size
+  end
 end

@@ -1,7 +1,7 @@
 <tumblr version="1.0">
   <tumblog name="sample" timezone="US/Eastern" cname="sample.tumblr.com" title="Break this parser">
   </tumblog>
-  <posts start="0" total="7">
+  <posts start="0" total="8">
     <post id="7" url="http://sample.tumblr.com/post/7" url-with-slug="http://52livros.com/post/7/sluggy" type="photo" date-gmt="2011-05-08 15:45:00 GMT" date="Sun, 08 May 2011 11:45:00" unix-timestamp="1304869500" format="markdown" reblog-key="76zsD8ZR" slug="sluggy" width="2592" height="1936">
       <photo-caption>A really big photo.</photo-caption>
       <photo-url max-width="1280">
@@ -77,6 +77,72 @@
         <line name="Me" label="Me:">Have things come?</line>
         <line name="Her" label="Her:">I have not.</line>
       </conversation>
+    </post>
+
+    <post id="8" url="http://sample.tumblr.com/post/8" url-with-slug="http://sample.tumblr.com/post/4956577203/are-facebook-and-flickr-the-new-homepage-photos" type="photo" date-gmt="2011-04-27 06:17:10 GMT" date="Wed, 27 Apr 2011 08:17:10" unix-timestamp="1303885030" format="html" reblog-key="jt03LZMQ" slug="are-facebook-and-flickr-the-new-homepage-photos" width="1170" height="1177">
+      <photo-caption>
+        <p>Are <a href="http://www.facebook.com/4010telekomshop#!/4010telekomshop?sk=app_141843815862034" target="_blank">Facebook</a> and <a href="http://www.flickr.com/photos/4010_telekom_shop/sets/72157626265084090/detail/" target="_blank">Flickr</a> the new homepage?</p> <p>Photos by me for Telekom (<a href="http://mareenfischinger.de/commissioned/4010-store-architecture/" target="_blank">see closer here</a>).</p> <p>via <a href="http://4010.de/home?loc=K%C3%B6ln" target="_blank">4010&#160;Köln</a></p>
+      </photo-caption>
+      <photo-url max-width="1280">
+        http://blog.mareenfischinger.com/photo/1280/4956577203/1/tumblr_lk9jzhrEYC1qz5f4r
+      </photo-url>
+      <photo-url max-width="500">
+        http://29.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro1_r1_500.png
+      </photo-url>
+      <photo-url max-width="400">
+        http://28.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro1_r1_400.png
+      </photo-url>
+      <photo-url max-width="250">
+        http://27.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro1_r1_250.png
+      </photo-url>
+      <photo-url max-width="100">
+        http://30.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro1_r1_100.png
+      </photo-url>
+      <photo-url max-width="75">
+        http://30.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro1_r1_75sq.png
+      </photo-url>
+      <photoset>
+        <photo offset="o1" caption="" width="1170" height="1177">
+          <photo-url max-width="1280">
+            http://blog.mareenfischinger.com/photo/1280/4956577203/1/tumblr_lk9jzhrEYC1qz5f4r
+          </photo-url>
+          <photo-url max-width="500">
+            http://29.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro1_r1_500.png
+          </photo-url>
+          <photo-url max-width="400">
+            http://28.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro1_r1_400.png
+          </photo-url>
+          <photo-url max-width="250">
+            http://27.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro1_r1_250.png
+          </photo-url>
+          <photo-url max-width="100">
+            http://30.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro1_r1_100.png
+          </photo-url>
+          <photo-url max-width="75">
+            http://30.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro1_r1_75sq.png
+          </photo-url>
+        </photo>
+        <photo offset="o2" caption="" width="1170" height="1179">
+          <photo-url max-width="1280">
+            http://blog.mareenfischinger.com/photo/1280/4956577203/2/tumblr_lk9jzhrEYC1qz5f4r
+          </photo-url>
+          <photo-url max-width="500">
+            http://30.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro2_r1_500.png
+          </photo-url>
+          <photo-url max-width="400">
+            http://26.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro2_r1_400.png
+          </photo-url>
+          <photo-url max-width="250">
+            http://24.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro2_r1_250.png
+          </photo-url>
+          <photo-url max-width="100">
+            http://26.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro2_r1_100.png
+          </photo-url>
+          <photo-url max-width="75">
+            http://24.media.tumblr.com/tumblr_lk9jzhrEYC1qz5f4ro2_r1_75sq.png
+          </photo-url>
+        </photo>
+      </photoset>
     </post>
   </posts>
 </tumblr>

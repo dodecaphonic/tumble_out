@@ -107,11 +107,20 @@ module TumbleOut
     end
 
     def parse_photo(post)
-      src  = post.search("photo-url").first.text
-      caption = @coder.decode(post.
-                              search("photo-caption").
-                              inner_html)
-      body = "<img src=\"#{src}\"><br/>#{caption}"
+      body = if !(photoset = post.search("photoset photo")).empty?
+               photoset.map do |p|
+                 src = p.search("photo-url").first.text
+                 caption = p.attr("caption")
+                 "<p><img src=\"#{src}\"><br/>#{caption}</p>"
+               end.join
+             else
+               caption = @coder.decode(post.
+                                       search("photo-caption").
+                                       inner_html)
+
+               src = post.search("photo-url").first.text
+               "<img src=\"#{src}\"><br/>#{caption}"
+             end
 
       [nil, body]
     end
