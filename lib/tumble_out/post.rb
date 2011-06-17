@@ -14,7 +14,8 @@ module TumbleOut
       @title = nil
       @body  = nil
       @slug  = nil
-      @topics = nil
+      @topics  = nil
+      @private = false
       @coder = HTMLEntities.new
 
       parse raw_post
@@ -74,7 +75,7 @@ module TumbleOut
     end
 
     def parse_video(post)
-      body = @coder.decode(post.search("video-source").
+      body = @coder.decode(post.search("video-player").first.
                            inner_html +
                            post.search("video-caption").
                            inner_html)
@@ -128,7 +129,7 @@ module TumbleOut
     def create_front_matter
       fm = "---\nlayout: post"
       fm << "\ntitle: #{@title}" if @title
-      fm << "\npermalink: #{@permalink}" if @permalink
+      fm << "\npermalink: #{@permalink}" if @use_permalink
       fm << "\ntopics: " << @topics.join(" ") unless @topics.empty?
       fm << "\n---"
 

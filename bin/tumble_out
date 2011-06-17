@@ -57,5 +57,5 @@ if tumblog.nil?
   exit
 end
 
-contentizer = TumbleOut::Contentizer.new(tumblog, true)
+contentizer = TumbleOut::Contentizer.new(tumblog, show_progress: true, use_permalinks: permalinks)
 contentizer.dump output_dir

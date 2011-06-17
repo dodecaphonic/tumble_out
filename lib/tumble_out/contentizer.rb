@@ -2,13 +2,21 @@ module TumbleOut
   class Contentizer
     attr_reader :url
 
-    def initialize(url, progress=false)
+    DEFAULTS = {
+      use_permalinks: false,
+      show_progress: false
+    }
+
+    def initialize(url, options={})
+      options = DEFAULTS.merge(options)
+
       @url = url
       @total_posts = nil
       @chunk_size  = 50
       @posts = []
       @done  = false
-      @show_progress = progress
+      @use_permalinks = options[:use_permalinks]
+      @show_progress = options[:show_progress]
     end
 
     def posts
@@ -16,7 +24,9 @@ module TumbleOut
 
       until @done
         chunk = raw_posts(@posts.size)
-        @posts += chunk.map { |rp| Post.new rp }
+        @posts += chunk.map { |rp|
+          Post.new rp, @use_permalinks
+        }
         @done = @posts.size == @total_posts
 
         $stderr.print "\r#{@posts.size} of #{@total_posts}" if @show_progress
