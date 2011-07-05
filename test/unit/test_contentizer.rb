@@ -6,17 +6,17 @@ class TestContentizer < MiniTest::Unit::TestCase
     raw_data = open(
                     File.join(File.dirname(__FILE__), "..",
                               "assets", "sample.xml")
-                    )
+                   )
 
-    Net::HTTP.expects(:get).
-      with(URI.parse("http://sample.tumblr.com/api/read?start=0")).returns raw_data
+    Net::HTTP.expects(:get).returns raw_data
+
     @contentizer = TumbleOut::Contentizer.new("sample.tumblr.com")
   end
 
   def test_if_number_of_posts_is_correct
     posts = @contentizer.posts
 
-    assert_equal 8, posts.size
+    assert_equal 9, posts.size
   end
 
   def test_that_post_types_are_of_a_given_count
@@ -27,8 +27,9 @@ class TestContentizer < MiniTest::Unit::TestCase
   end
 
   def test_whether_posts_are_of_specific_types
-    valid_types = %w(audio regular video quote photo
-                     answer conversation).sort
+    valid_types = [:audio, :regular, :video, :quote, :photo,
+                   :answer, :conversation].sort
+
     post_types = @contentizer.posts.map { |p|
       p.type
     }.uniq.sort
@@ -45,7 +46,7 @@ class TestContentizer < MiniTest::Unit::TestCase
 
     files = Dir.glob(full_path)
 
-    assert_equal 8, files.size
+    assert_equal 9, files.size
 
     files.each { |f| File.delete f }
   end

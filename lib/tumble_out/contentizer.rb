@@ -38,7 +38,7 @@ module TumbleOut
     end
 
     def each_post(&blk)
-      all_posts.each &blk
+      posts.each &blk
     end
 
     def dump(directory)
@@ -54,7 +54,9 @@ module TumbleOut
     private
     def raw_posts(offset=0)
       uri = "http://#{@url}/api/read?start=#{offset}"
-      doc = Nokogiri::XML(Net::HTTP.get(URI.parse(uri)))
+
+      raw = Net::HTTP.get(URI.parse(uri))
+      doc = Nokogiri::XML(raw)
 
       if @total_posts.nil?
         @total_posts = doc.search("posts").first.

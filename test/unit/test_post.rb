@@ -8,9 +8,10 @@ class TestPost < MiniTest::Unit::TestCase
                               "assets", "sample.xml")
                     )
 
-    Net::HTTP.expects(:get).
-      with(URI.parse("http://sample.tumblr.com/api/read?start=0")).returns raw_data
+    Net::HTTP.expects(:get).returns raw_data
+
     contentizer = TumbleOut::Contentizer.new("sample.tumblr.com")
+
     @posts = contentizer.posts
   end
 
@@ -21,7 +22,7 @@ class TestPost < MiniTest::Unit::TestCase
   end
 
   def test_whether_content_matches_type
-    convo = @posts.find { |p| p.type == "conversation" }
+    convo = @posts.find { |p| p.type == :conversation }
 
     doc = Nokogiri::HTML(convo.body)
     ul = doc.search("ul[class=conversation]")
@@ -36,9 +37,28 @@ class TestPost < MiniTest::Unit::TestCase
   end
 
   def test_if_photoset_has_been_parsed
-    photoset = @posts.last
+    photoset = @posts.find { |p| p.type == :photo }
     doc = Nokogiri::HTML(photoset.body)
 
     assert_equal 2, doc.search("img").size
+  end
+
+  def test_if_list_of_assets_is_generated_correctly
+    photos   = @posts.select { |p| p.type == :photo }
+    photo    = photos.last
+    photoset = photos.first
+    video    = @posts.find { |p| p.type == :video }
+    audio    = @posts.find { |p| p.type == :audio }
+
+    assert_equal ['http://sample.tumblr.com/photo/1280/1/1/tumblr_lkvvrj3U2s1qaeuyt'],
+                 photo.assets
+    assert_equal ['http://blog.mareenfischinger.com/photo/1280/4956577203/1/tumblr_lk9jzhrEYC1qz5f4r',
+                  'http://blog.mareenfischinger.com/photo/1280/4956577203/2/tumblr_lk9jzhrEYC1qz5f4r'],
+                 photoset.assets
+    assert_equal ['http://www.tumblr.com/audio_file/5863286892/tumblr_llr1crZHWZ1qz8306'],
+                 audio.assets
+    assert_equal ['http://sample.tumblr.com/video_file/7271539734/tumblr_lnvji6Kfru1qzn59d'],
+                 video.assets
+
   end
 end
